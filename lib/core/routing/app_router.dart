@@ -9,19 +9,19 @@ import 'package:random_user/presentation/users/pages/user_details_page.dart';
 import 'package:random_user/presentation/users/pages/users_list_page.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: Routes.usersList,
+  initialLocation: Routes.usersList.name,
   routes: [
     GoRoute(
-      path: Routes.usersList,
-      name: 'users_list',
+      path: Routes.usersList.path,
+      name: Routes.usersList.name,
       builder: (context, state) => ChangeNotifierProvider<UsersListController>(
         create: (_) => sl<UsersListController>()..loadInitial(),
         child: const UsersListPage(),
       ),
     ),
     GoRoute(
-      path: Routes.userDetails,
-      name: 'user_details',
+      path: Routes.userDetails.path,
+      name: Routes.userDetails.name,
       builder: (context, state) {
         final id = state.pathParameters['id']!;
         return ChangeNotifierProvider<UserDetailsController>(

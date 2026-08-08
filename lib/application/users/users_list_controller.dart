@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:random_user/core/task/src/async_value.dart';
+import 'package:random_user/core/task/src/task_err.dart';
 import 'package:random_user/core/task/src/task_result.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/domain/entities/users_response.dart';
@@ -16,6 +17,7 @@ final class UsersListController extends ChangeNotifier {
 
   final List<User> _items = [];
   AsyncValue<List<User>> users = const AsyncValue();
+  AsyncValue<TaskErr>? loadMoreError;
   int _currentPage = 0;
   bool isLoadingMore = false;
   bool hasMore = true;
@@ -27,6 +29,7 @@ final class UsersListController extends ChangeNotifier {
     _currentPage = 0;
     _items.clear();
     hasMore = true;
+    loadMoreError = null;
     notifyListeners();
 
     final result = await _getUsers(
@@ -39,6 +42,7 @@ final class UsersListController extends ChangeNotifier {
     if (isLoadingMore || !hasMore || users.status != Status.success) return;
 
     isLoadingMore = true;
+    loadMoreError = null;
     notifyListeners();
 
     final nextPage = _currentPage + 1;
@@ -46,6 +50,11 @@ final class UsersListController extends ChangeNotifier {
       GetUsersParams(page: nextPage, results: _nextPageSize),
     );
     _applyResult(result, isInitial: false);
+  }
+
+  Future<void> retryLoadMore() async {
+    loadMoreError = null;
+    await loadMore();
   }
 
   Future<void> refresh() async {
@@ -58,15 +67,17 @@ final class UsersListController extends ChangeNotifier {
       ok: (response) {
         _items.addAll(response.users);
         _currentPage = response.info.page;
-        hasMore = response.users.length >= (isInitial ? _initialPageSize : _nextPageSize);
-        users = AsyncValue(
-          value: List.unmodifiable(_items),
-          status: Status.success,
-        );
+        final pageSize = isInitial ? _initialPageSize : _nextPageSize;
+        hasMore = response.users.isNotEmpty && response.users.length >= pageSize;
+        users = users.toSuccess(List.unmodifiable(_items));
       },
       err: (err) {
         if (isInitial) {
-          users = AsyncValue(status: Status.error, message: err);
+          users = users.toError(err);
+        } else {
+          loadMoreError = loadMoreError == null
+              ? const AsyncValue<TaskErr>().toError(err)
+              : loadMoreError!.toError(err);
         }
       },
     );

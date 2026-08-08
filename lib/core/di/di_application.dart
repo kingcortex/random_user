@@ -7,7 +7,7 @@ import 'package:random_user/domain/usecases/get_users.dart';
 
 @module
 abstract class DiApplicationModule {
-  @lazySingleton
+  @injectable
   UsersListController provideUsersListController(GetUsersUseCase getUsers) =>
       UsersListController(getUsers);
 

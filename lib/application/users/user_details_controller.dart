@@ -17,8 +17,8 @@ final class UserDetailsController extends ChangeNotifier {
 
     final result = await _getUserById(GetUserByIdParams(id: id));
     result.on(
-      ok: (u) => user = AsyncValue(value: u, status: Status.success),
-      err: (err) => user = AsyncValue(status: Status.error, message: err),
+      ok: (u) => user = user.toSuccess(u),
+      err: (err) => user = user.toError(err),
     );
     notifyListeners();
   }

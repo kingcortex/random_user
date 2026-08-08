@@ -25,7 +25,10 @@ class UserTile extends StatelessWidget {
         style: Theme.of(context).textTheme.titleMedium,
       ),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => context.push(Routes.userDetails.replaceFirst(':id', user.id)),
+      onTap: () => context.pushNamed(
+        Routes.userDetails.name,
+        pathParameters: {'id': user.id},
+      ),
     );
   }
 }

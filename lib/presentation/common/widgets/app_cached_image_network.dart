@@ -67,7 +67,7 @@ class AppCachedImageNetwork extends StatelessWidget {
           context,
           color: AppColors.primaryTint,
         ),
-        child: const Icon(Icons.image, color: AppColors.primaryMoon700),
+        child: const Icon(Icons.image, color: AppColors.accentBlue),
       );
     }
     if (imageUrl!.toLowerCase().endsWith('.svg')) {

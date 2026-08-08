@@ -29,13 +29,26 @@ class UsersListPage extends StatelessWidget {
               onRetry: controller.loadInitial,
             );
           }
-          return CustomPaginationList<User>(
-            items: controller.items,
-            isLoadingMore: controller.isLoadingMore,
-            fetchMoreItems: controller.hasMore ? controller.loadMore : null,
-            onRefresh: controller.refresh,
+          return Column(
+            children: [
+              Expanded(
+                child: CustomPaginationList<User>(
+                  items: controller.items,
+                  isLoadingMore: controller.isLoadingMore,
+                  fetchMoreItems: controller.hasMore
+                      ? controller.loadMore
+                      : null,
+                  onRefresh: controller.refresh,
 
-            itemBuilder: (context, user) => UserTile(user: user),
+                  itemBuilder: (context, user) => UserTile(user: user),
+                ),
+              ),
+              if (controller.loadMoreError != null)
+                _LoadMoreErrorBanner(
+                  message: controller.loadMoreError!.message.displayMessage,
+                  onRetry: controller.retryLoadMore,
+                ),
+            ],
           );
         },
       ),
@@ -67,6 +80,40 @@ class _ErrorView extends StatelessWidget {
               label: const Text('Réessayer'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LoadMoreErrorBanner extends StatelessWidget {
+  const _LoadMoreErrorBanner({required this.message, required this.onRetry});
+
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).colorScheme.errorContainer,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              const Icon(Icons.warning_amber, size: 20),
+              8.horizontalSpace,
+              Expanded(
+                child: Text(
+                  message,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              TextButton(onPressed: onRetry, child: const Text('Réessayer')),
+            ],
+          ),
         ),
       ),
     );

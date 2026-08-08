@@ -54,13 +54,13 @@ class AppTheme {
       // onSurface: AppColors.neutral900,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primarySun950,
+      backgroundColor: AppColors.accentOrange,
       extendedTextStyle: TextStyle(fontFamily: AppFont.textFont),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         textStyle: const TextStyle(
-          color: AppColors.primarySun950,
+          color: AppColors.accentOrange,
           fontFamily: AppFont.textFont,
           fontSize: 14,
         ),
