@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+
+import 'package:random_user/core/theme/app_colors.dart';
+import 'package:random_user/core/theme/app_font.dart';
+import 'package:random_user/core/theme/sizes.dart';
+import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/core/theme/text_theme.dart';
-import '/core/theme/app_font.dart';
-import 'app_colors.dart';
 
 class AppTheme {
-  /// Thème clair (par défaut)
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: AppFont.textFont,
     primaryColor: AppColors.primaryBase,
-    // scaffoldBackgroundColor: AppColors.secondaryAlbescent50,
     appBarTheme: const AppBarTheme(
-      // backgroundColor: AppColors.secondaryAlbescent50,
       titleTextStyle: TextStyle(
         fontFamily: AppFont.titleFont,
         color: AppColors.neutral950,
@@ -21,7 +21,6 @@ class AppTheme {
     ),
     navigationBarTheme: NavigationBarThemeData(
       height: kBottomNavigationBarHeight,
-      // backgroundColor: AppColors.secondaryAlbescent50,
       indicatorColor: Colors.transparent,
       overlayColor: WidgetStatePropertyAll(
         AppColors.primaryBase.withValues(alpha: .2),
@@ -34,7 +33,7 @@ class AppTheme {
             fontWeight: FontWeight.w600,
             color: AppColors.primaryBase,
             height: .7,
-          ); // Couleur quand sélectionné
+          );
         }
         return const TextStyle(
           color: AppColors.textColorPrimary,
@@ -42,16 +41,14 @@ class AppTheme {
           fontSize: 11,
           height: .7,
           fontFamily: AppFont.titleFont,
-        ); // Couleur par défaut
+        );
       }),
     ),
     colorScheme: const ColorScheme.light(
       primary: AppColors.primaryBase,
-      // secondary: AppColors.blueDianne600,
       surface: AppColors.neutralWhite,
       onPrimary: AppColors.neutralWhite,
       onSecondary: AppColors.neutralWhite,
-      // onSurface: AppColors.neutral900,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.accentOrange,
@@ -71,11 +68,11 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryBase,
         foregroundColor: AppColors.neutralWhite,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        padding: Spacing.buttonPadding,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.buttonRadius),
+        ),
       ),
     ),
   );
-
- 
 }

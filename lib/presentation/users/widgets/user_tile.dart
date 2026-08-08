@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:random_user/core/routing/routes.dart';
+import 'package:random_user/core/theme/sizes.dart';
+import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/app_cached_image_network.dart';
 
@@ -13,11 +15,11 @@ class UserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      contentPadding: Spacing.tileContent,
       leading: AppCachedImageNetwork(
         imageUrl: user.picture.medium,
-        width: 56,
-        height: 56,
+        width: Sizes.avatar,
+        height: Sizes.avatar,
         shape: BoxShape.circle,
       ),
       title: Text(

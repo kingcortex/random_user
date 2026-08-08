@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:random_user/application/users/user_details_controller.dart';
 import 'package:random_user/core/task/src/async_value.dart';
+import 'package:random_user/core/theme/sizes.dart';
+import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/core/utils/gap.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/app_cached_image_network.dart';
@@ -25,7 +27,7 @@ class UserDetailsPage extends StatelessWidget {
           if (state.status == Status.error) {
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: Spacing.pagePadding,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -57,13 +59,13 @@ class _DetailsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: Spacing.pagePadding,
       children: [
         Center(
           child: AppCachedImageNetwork(
             imageUrl: user.picture.large,
-            width: 140,
-            height: 140,
+            width: Sizes.profilePhoto,
+            height: Sizes.profilePhoto,
             shape: BoxShape.circle,
           ),
         ),
@@ -115,7 +117,7 @@ class _Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: Spacing.sectionVertical,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

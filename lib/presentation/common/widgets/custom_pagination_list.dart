@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/app_constant.dart';
-import '../../../core/utils/gap.dart';
+import 'package:random_user/core/theme/spacing.dart';
+import 'package:random_user/core/utils/gap.dart';
 
 class CustomPaginationList<T> extends StatefulWidget {
   final Widget Function(BuildContext context, T item) itemBuilder;
   final List<T> items;
   final Widget? loadingWidget;
-  final int pageSize;
   final ScrollController? scrollController;
   final VoidCallback? fetchMoreItems;
   final bool Function(ScrollNotification)? onNotification;
   final bool shrinkWrap;
   final ScrollPhysics? physics;
   final Future<void> Function() onRefresh;
-
   final bool isLoadingMore;
 
   const CustomPaginationList({
     super.key,
     required this.itemBuilder,
     this.loadingWidget,
-    this.pageSize = 50,
     this.scrollController,
     this.onNotification,
     this.shrinkWrap = false,
@@ -39,11 +36,6 @@ class CustomPaginationList<T> extends StatefulWidget {
 
 class _CustomPaginationListState<T> extends State<CustomPaginationList<T>> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
@@ -59,16 +51,16 @@ class _CustomPaginationListState<T> extends State<CustomPaginationList<T>> {
         }
         return false;
       },
-      child: RefreshIndicator.adaptive(
+      child: RefreshIndicator(
         onRefresh: () async {
           await widget.onRefresh();
         },
-        child: _buidList(),
+        child: _buildList(),
       ),
     );
   }
 
-  Widget _buidList() {
+  Widget _buildList() {
     return ListView.separated(
       shrinkWrap: widget.shrinkWrap,
       physics: widget.physics,
@@ -84,9 +76,7 @@ class _CustomPaginationListState<T> extends State<CustomPaginationList<T>> {
         }
       },
       separatorBuilder: (context, index) => 12.verticalSpace,
-      padding: EdgeInsets.symmetric(
-        horizontal: AppConstant.appPadding,
-      ).copyWith(bottom: 100),
+      padding: Spacing.pagePadding.copyWith(bottom: 100),
     );
   }
 }

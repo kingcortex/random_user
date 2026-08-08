@@ -10,6 +10,7 @@ import 'package:random_user/domain/usecases/get_users.dart';
 final class UsersListController extends ChangeNotifier {
   UsersListController(this._getUsers);
 
+  static const int _initialPage = 1;
   static const int _initialPageSize = 50;
   static const int _nextPageSize = 20;
 
@@ -33,7 +34,7 @@ final class UsersListController extends ChangeNotifier {
     notifyListeners();
 
     final result = await _getUsers(
-      const GetUsersParams(page: 1, results: _initialPageSize),
+      const GetUsersParams(page: _initialPage, results: _initialPageSize),
     );
     _applyResult(result, isInitial: true);
   }

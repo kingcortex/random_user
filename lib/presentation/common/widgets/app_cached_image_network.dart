@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import 'package:random_user/core/theme/app_colors.dart';
+import 'package:random_user/core/theme/sizes.dart';
 
 class AppCachedImageNetwork extends StatelessWidget {
   const AppCachedImageNetwork({
@@ -37,7 +38,7 @@ class AppCachedImageNetwork extends StatelessWidget {
     return BoxDecoration(
       shape: shape ?? BoxShape.rectangle,
       borderRadius: shape == null
-          ? borderRaduis ?? BorderRadius.circular(21)
+          ? borderRaduis ?? BorderRadius.circular(Sizes.imageRadius)
           : null,
       image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
     );
@@ -51,7 +52,7 @@ class AppCachedImageNetwork extends StatelessWidget {
         BoxDecoration(
           shape: shape ?? BoxShape.rectangle,
           borderRadius: shape == null
-              ? borderRaduis ?? BorderRadius.circular(24)
+              ? borderRaduis ?? BorderRadius.circular(Sizes.imageRadius)
               : null,
           color: color,
         );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:random_user/core/network/exceptions.dart';
 import 'package:random_user/core/task/src/task_err.dart';
 import 'package:random_user/core/task/src/task_result.dart';
@@ -42,7 +44,7 @@ final class UserRepositoryImpl implements UserRepository {
       final model = await local.getUser(id);
       if (model == null) {
         return TaskResult.err(
-          TaskErr.message('Utilisateur introuvable', code: 404),
+          TaskErr.message('User not found', code: HttpStatus.notFound),
         );
       }
       return TaskResult.ok(model.toEntity());

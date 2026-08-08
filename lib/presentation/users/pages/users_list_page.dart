@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:random_user/application/users/users_list_controller.dart';
 import 'package:random_user/core/task/src/async_value.dart';
+import 'package:random_user/core/theme/sizes.dart';
+import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/core/utils/gap.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/custom_pagination_list.dart';
@@ -35,11 +37,24 @@ class UsersListPage extends StatelessWidget {
                 child: CustomPaginationList<User>(
                   items: controller.items,
                   isLoadingMore: controller.isLoadingMore,
-                  fetchMoreItems: controller.hasMore
-                      ? controller.loadMore
-                      : null,
+                  fetchMoreItems: controller.hasMore ? controller.loadMore : null,
                   onRefresh: controller.refresh,
-
+                  loadingWidget: Padding(
+                    padding: const EdgeInsets.all(Spacing.md),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircularProgressIndicator.adaptive(),
+                          8.verticalSpace,
+                          Text(
+                            'Chargement…',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   itemBuilder: (context, user) => UserTile(user: user),
                 ),
               ),
@@ -66,11 +81,11 @@ class _ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: Spacing.pagePadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48),
+            const Icon(Icons.error_outline, size: Sizes.iconLg),
             12.verticalSpace,
             Text(message, textAlign: TextAlign.center),
             16.verticalSpace,
@@ -99,10 +114,10 @@ class _LoadMoreErrorBanner extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: Spacing.bannerPadding,
           child: Row(
             children: [
-              const Icon(Icons.warning_amber, size: 20),
+              const Icon(Icons.warning_amber, size: Sizes.iconSm),
               8.horizontalSpace,
               Expanded(
                 child: Text(
@@ -111,7 +126,10 @@ class _LoadMoreErrorBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              TextButton(onPressed: onRetry, child: const Text('Réessayer')),
+              TextButton(
+                onPressed: onRetry,
+                child: const Text('Réessayer'),
+              ),
             ],
           ),
         ),
