@@ -10,7 +10,7 @@ final class GetUsersParams {
   final int results;
 }
 
-final class GetUsersUseCase implements UseCase<UsersResponse, GetUsersParams> {
+class GetUsersUseCase implements UseCase<UsersResponse, GetUsersParams> {
   const GetUsersUseCase(this.repository);
 
   final UserRepository repository;

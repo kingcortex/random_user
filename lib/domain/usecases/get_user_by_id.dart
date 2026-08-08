@@ -9,7 +9,7 @@ final class GetUserByIdParams {
   final String id;
 }
 
-final class GetUserByIdUseCase implements UseCase<User, GetUserByIdParams> {
+class GetUserByIdUseCase implements UseCase<User, GetUserByIdParams> {
   const GetUserByIdUseCase(this.repository);
 
   final UserRepository repository;
