@@ -8,6 +8,7 @@ import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/core/utils/gap.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/custom_pagination_list.dart';
+import 'package:random_user/presentation/common/widgets/error_view.dart';
 import 'package:random_user/presentation/users/widgets/user_tile.dart';
 
 class UsersListPage extends StatelessWidget {
@@ -26,7 +27,7 @@ class UsersListPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator.adaptive());
           }
           if (state.status == Status.error && controller.items.isEmpty) {
-            return _ErrorView(
+            return ErrorView(
               message: state.message.displayMessage,
               onRetry: controller.loadInitial,
             );
@@ -53,36 +54,6 @@ class UsersListPage extends StatelessWidget {
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.message, required this.onRetry});
-
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: Spacing.pagePadding,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.error_outline, size: Sizes.iconLg),
-            Spacing.sm.verticalSpace,
-            Text(message, textAlign: TextAlign.center),
-            Spacing.md.verticalSpace,
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Réessayer'),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ import 'exceptions.dart';
 /// Returns parsed [T] directly — the caller is responsible for knowing the
 /// expected type. Throws [NetworkException] (or a subclass) on failure;
 /// Dio's own types never leak past this boundary.
-abstract class HttpClient {
+abstract interface class HttpClient {
   Future<T> get<T>({
     required String endpoint,
     Map<String, dynamic>? queryParameters,
@@ -130,8 +130,10 @@ class HttpClientImpl implements HttpClient {
     return switch (statusCode) {
       401 || 403 => UnauthorizedException(code: statusCode, message: message),
       404 => NotFoundException(message: message),
-      >= 400 && < 500 =>
-        ValidationException(code: statusCode, message: message),
+      >= 400 && < 500 => ValidationException(
+        code: statusCode,
+        message: message,
+      ),
       _ => ServerException(code: statusCode, message: message),
     };
   }
