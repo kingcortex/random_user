@@ -9,7 +9,7 @@ import 'package:random_user/presentation/users/pages/user_details_page.dart';
 import 'package:random_user/presentation/users/pages/users_list_page.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: Routes.usersList.name,
+  initialLocation: Routes.usersList.path,
   routes: [
     GoRoute(
       path: Routes.usersList.path,
