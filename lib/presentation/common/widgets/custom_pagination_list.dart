@@ -51,7 +51,7 @@ class _CustomPaginationListState<T> extends State<CustomPaginationList<T>> {
         }
         return false;
       },
-      child: RefreshIndicator(
+      child: RefreshIndicator.adaptive(
         onRefresh: () async {
           await widget.onRefresh();
         },
