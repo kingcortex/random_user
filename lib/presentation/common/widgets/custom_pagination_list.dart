@@ -75,7 +75,7 @@ class _CustomPaginationListState<T> extends State<CustomPaginationList<T>> {
           return SizedBox.shrink();
         }
       },
-      separatorBuilder: (context, index) => 12.verticalSpace,
+      separatorBuilder: (context, index) => Spacing.sm.verticalSpace,
       padding: Spacing.pagePadding.copyWith(bottom: 100),
     );
   }

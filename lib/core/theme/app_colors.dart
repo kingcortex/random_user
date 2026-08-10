@@ -11,3 +11,15 @@ class AppColors {
   static const Color neutralWhite = Color(0xFFFFFFFF);
   static const Color textColorPrimary = Color(0xff1A1A1A);
 }
+
+extension ColorExtensions on BuildContext {
+  Color get primary => AppColors.primaryBase;
+  Color get primaryTint => AppColors.primaryTint;
+  Color get accentOrange => AppColors.accentOrange;
+  Color get accentBlue => AppColors.accentBlue;
+  Color get slate100 => AppColors.slate100;
+  Color get errorBase => AppColors.errorBase;
+  Color get neutral950 => AppColors.neutral950;
+  Color get neutralWhite => AppColors.neutralWhite;
+  Color get textColorPrimary => AppColors.textColorPrimary;
+}

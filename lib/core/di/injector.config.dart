@@ -83,7 +83,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i103.GetUserByIdUseCase>(),
       ),
     );
-    gh.lazySingleton<_i148.UsersListController>(
+    gh.factory<_i148.UsersListController>(
       () => diApplicationModule.provideUsersListController(
         gh<_i915.GetUsersUseCase>(),
       ),

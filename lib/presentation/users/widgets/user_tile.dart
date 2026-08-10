@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:random_user/core/routing/routes.dart';
 import 'package:random_user/core/theme/sizes.dart';
 import 'package:random_user/core/theme/spacing.dart';
+import 'package:random_user/core/theme/text_theme.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/app_cached_image_network.dart';
 
@@ -25,7 +26,7 @@ class UserTile extends StatelessWidget {
       ),
       title: Text(
         '${user.name.first} ${user.name.last}',
-        style: Theme.of(context).textTheme.titleMedium,
+        style: context.titleMedium,
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => context.pushNamed(

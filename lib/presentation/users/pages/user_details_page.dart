@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:random_user/application/users/user_details_controller.dart';
 import 'package:random_user/core/task/src/async_value.dart';
+import 'package:random_user/core/theme/app_colors.dart';
 import 'package:random_user/core/theme/sizes.dart';
 import 'package:random_user/core/theme/spacing.dart';
 import 'package:random_user/core/utils/gap.dart';
@@ -38,7 +39,7 @@ class UserDetailsPage extends StatelessWidget {
                       state.message.displayMessage,
                       textAlign: TextAlign.center,
                     ),
-                    16.verticalSpace,
+                    Spacing.md.verticalSpace,
                     ElevatedButton.icon(
                       onPressed: () => controller.load(userId),
                       icon: const Icon(Icons.refresh),
@@ -75,7 +76,7 @@ class _DetailsBody extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-        16.verticalSpace,
+        Spacing.md.verticalSpace,
         Center(
           child: Text(
             '${user.name.first} ${user.name.last}',
@@ -83,7 +84,7 @@ class _DetailsBody extends StatelessWidget {
           ),
         ),
         Center(child: Text(user.email, style: context.bodyMedium)),
-        24.verticalSpace,
+        Spacing.xl.verticalSpace,
         _Section(
           icon: Icons.location_on_outlined,
           title: 'Adresse',
@@ -120,13 +121,12 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Padding(
       padding: Spacing.sectionVertical,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: theme.colorScheme.primary),
+          Icon(icon, color: context.primary),
           12.horizontalSpace,
           Expanded(
             child: Column(
@@ -138,7 +138,7 @@ class _Section extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                4.verticalSpace,
+                Spacing.xxs.verticalSpace,
                 Text(value, style: context.bodyMedium),
               ],
             ),

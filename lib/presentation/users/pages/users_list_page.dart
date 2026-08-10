@@ -73,9 +73,9 @@ class _ErrorView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.error_outline, size: Sizes.iconLg),
-            12.verticalSpace,
+            Spacing.sm.verticalSpace,
             Text(message, textAlign: TextAlign.center),
-            16.verticalSpace,
+            Spacing.md.verticalSpace,
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
@@ -96,26 +96,17 @@ class _LoadMoreErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.errorContainer,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: Spacing.bannerPadding,
-          child: Row(
-            children: [
-              const Icon(Icons.warning_amber, size: Sizes.iconSm),
-              8.horizontalSpace,
-              Expanded(
-                child: Text(
-                  message,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              TextButton(onPressed: onRetry, child: const Text('Réessayer')),
-            ],
-          ),
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: Spacing.bannerPadding,
+        child: Row(
+          children: [
+            const Icon(Icons.warning_amber, size: Sizes.iconSm),
+            8.horizontalSpace,
+            Expanded(child: Text(message, overflow: TextOverflow.ellipsis)),
+            TextButton(onPressed: onRetry, child: const Text('Réessayer')),
+          ],
         ),
       ),
     );
