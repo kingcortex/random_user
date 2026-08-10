@@ -9,6 +9,8 @@ import 'package:random_user/core/utils/gap.dart';
 import 'package:random_user/domain/entities/user.dart';
 import 'package:random_user/presentation/common/widgets/app_cached_image_network.dart';
 
+import '../../../core/theme/text_theme.dart';
+
 class UserDetailsPage extends StatelessWidget {
   const UserDetailsPage({required this.userId, super.key});
 
@@ -21,7 +23,8 @@ class UserDetailsPage extends StatelessWidget {
       body: Consumer<UserDetailsController>(
         builder: (context, controller, _) {
           final state = controller.user;
-          if (state.status == Status.initial || state.status == Status.loading) {
+          if (state.status == Status.initial ||
+              state.status == Status.loading) {
             return const Center(child: CircularProgressIndicator.adaptive());
           }
           if (state.status == Status.error) {
@@ -31,7 +34,10 @@ class UserDetailsPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(state.message.displayMessage, textAlign: TextAlign.center),
+                    Text(
+                      state.message.displayMessage,
+                      textAlign: TextAlign.center,
+                    ),
                     16.verticalSpace,
                     ElevatedButton.icon(
                       onPressed: () => controller.load(userId),
@@ -57,12 +63,12 @@ class _DetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return ListView(
       padding: Spacing.pagePadding,
       children: [
         Center(
           child: AppCachedImageNetwork(
+            heroTag: user.id,
             imageUrl: user.picture.large,
             width: Sizes.profilePhoto,
             height: Sizes.profilePhoto,
@@ -73,15 +79,10 @@ class _DetailsBody extends StatelessWidget {
         Center(
           child: Text(
             '${user.name.first} ${user.name.last}',
-            style: theme.textTheme.headlineSmall,
+            style: context.headlineSmall,
           ),
         ),
-        Center(
-          child: Text(
-            user.email,
-            style: theme.textTheme.bodyMedium,
-          ),
-        ),
+        Center(child: Text(user.email, style: context.bodyMedium)),
         24.verticalSpace,
         _Section(
           icon: Icons.location_on_outlined,
@@ -107,7 +108,11 @@ class _DetailsBody extends StatelessWidget {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({required this.icon, required this.title, required this.value});
+  const _Section({
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
 
   final IconData icon;
   final String title;
@@ -127,9 +132,14 @@ class _Section extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: theme.textTheme.labelLarge),
+                Text(
+                  title,
+                  style: context.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 4.verticalSpace,
-                Text(value, style: theme.textTheme.bodyMedium),
+                Text(value, style: context.bodyMedium),
               ],
             ),
           ),

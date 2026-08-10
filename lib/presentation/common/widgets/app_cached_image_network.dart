@@ -12,6 +12,7 @@ class AppCachedImageNetwork extends StatelessWidget {
   const AppCachedImageNetwork({
     required this.imageUrl,
     super.key,
+    this.heroTag,
     this.width,
     this.height,
     this.boxDecoration,
@@ -27,6 +28,7 @@ class AppCachedImageNetwork extends StatelessWidget {
   final BoxDecoration? boxDecoration;
   final BoxShape? shape;
   final BorderRadius? borderRaduis;
+  final String? heroTag;
 
   BoxDecoration _buildDecorationForImage(
     BuildContext context,
@@ -60,8 +62,9 @@ class AppCachedImageNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget child;
     if (imageUrl == null || imageUrl!.isEmpty) {
-      return Container(
+      child = Container(
         width: width ?? double.infinity,
         height: height ?? double.infinity,
         decoration: _buildDecorationForPlaceholder(
@@ -70,9 +73,8 @@ class AppCachedImageNetwork extends StatelessWidget {
         ),
         child: const Icon(Icons.image, color: AppColors.accentBlue),
       );
-    }
-    if (imageUrl!.toLowerCase().endsWith('.svg')) {
-      return Container(
+    } else if (imageUrl!.toLowerCase().endsWith('.svg')) {
+      child = Container(
         width: width ?? double.infinity,
         height: height ?? double.infinity,
         decoration: _buildDecorationForPlaceholder(context),
@@ -85,42 +87,47 @@ class AppCachedImageNetwork extends StatelessWidget {
               const CircularProgressIndicator.adaptive(),
         ),
       );
-    }
-
-    return CachedNetworkImage(
-      imageUrl: imageUrl!,
-      imageBuilder: (context, imageProvider) {
-        final decoration = _buildDecorationForImage(context, imageProvider);
-        return Container(
-          width: width ?? double.infinity,
-          height: height ?? double.infinity,
-          decoration: decoration,
-        );
-      },
-      placeholder: (context, url) => Skeletonizer(
-        child: Skeleton.shade(
-          child: Container(
+    } else {
+      child = CachedNetworkImage(
+        imageUrl: imageUrl!,
+        imageBuilder: (context, imageProvider) {
+          final decoration = _buildDecorationForImage(context, imageProvider);
+          return Container(
+            width: width ?? double.infinity,
+            height: height ?? double.infinity,
+            decoration: decoration,
+          );
+        },
+        placeholder: (context, url) => Skeletonizer(
+          child: Skeleton.shade(
+            child: Container(
+              width: width ?? double.infinity,
+              height: height ?? double.infinity,
+              decoration: _buildDecorationForPlaceholder(
+                context,
+                color: AppColors.slate100,
+              ),
+            ),
+          ),
+        ),
+        errorWidget: (context, url, error) {
+          log(error.toString(), name: 'AppCachedImageNetwork');
+          return Container(
             width: width ?? double.infinity,
             height: height ?? double.infinity,
             decoration: _buildDecorationForPlaceholder(
               context,
-              color: AppColors.slate100,
+              color: AppColors.primaryTint,
             ),
-          ),
-        ),
-      ),
-      errorWidget: (context, url, error) {
-        log(error.toString(), name: 'AppCachedImageNetwork');
-        return Container(
-          width: width ?? double.infinity,
-          height: height ?? double.infinity,
-          decoration: _buildDecorationForPlaceholder(
-            context,
-            color: AppColors.primaryTint,
-          ),
-          child: const Icon(Icons.error, color: AppColors.errorBase),
-        );
-      },
-    );
+            child: const Icon(Icons.error, color: AppColors.errorBase),
+          );
+        },
+      );
+    }
+
+    if (heroTag != null) {
+      return Hero(tag: heroTag!, child: child);
+    }
+    return child;
   }
 }

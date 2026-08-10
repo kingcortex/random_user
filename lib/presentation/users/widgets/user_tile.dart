@@ -18,6 +18,7 @@ class UserTile extends StatelessWidget {
       contentPadding: Spacing.tileContent,
       leading: AppCachedImageNetwork(
         imageUrl: user.picture.medium,
+        heroTag: user.id,
         width: Sizes.avatar,
         height: Sizes.avatar,
         shape: BoxShape.circle,

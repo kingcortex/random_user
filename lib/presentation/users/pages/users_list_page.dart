@@ -37,24 +37,11 @@ class UsersListPage extends StatelessWidget {
                 child: CustomPaginationList<User>(
                   items: controller.items,
                   isLoadingMore: controller.isLoadingMore,
-                  fetchMoreItems: controller.hasMore ? controller.loadMore : null,
+                  fetchMoreItems: controller.hasMore
+                      ? controller.loadMore
+                      : null,
                   onRefresh: controller.refresh,
-                  loadingWidget: Padding(
-                    padding: const EdgeInsets.all(Spacing.md),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const CircularProgressIndicator.adaptive(),
-                          8.verticalSpace,
-                          Text(
-                            'Chargement…',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+
                   itemBuilder: (context, user) => UserTile(user: user),
                 ),
               ),
@@ -126,10 +113,7 @@ class _LoadMoreErrorBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              TextButton(
-                onPressed: onRetry,
-                child: const Text('Réessayer'),
-              ),
+              TextButton(onPressed: onRetry, child: const Text('Réessayer')),
             ],
           ),
         ),
